@@ -2,6 +2,19 @@
 __pycache__/
 *.py[cod]
 *$py.class
+.DS_Store
+
+data/oclc/*
+data/hathi_marc/*
+data/hathi_text/*
+data/hathi_tests/*
+data/hathi_summaries/*
+data/search_pages/*
+
+data/holdings/*
+data/covers/*
+data/hathi_web/*
+data/hashdata/*
 
 # C extensions
 *.so

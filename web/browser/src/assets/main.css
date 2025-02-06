@@ -1,0 +1,121 @@
+@import './base.css';
+
+body{
+          padding: 1em;
+        }
+        .facet-item{
+          text-transform: capitalize;
+        }
+        .facet-item:hover{
+          transform: scale(1.01);
+
+        }
+
+        .facet-item a{
+          color: var(--bulma-text) !important;
+        }
+        .facet-item a:hover{
+          color: var(--bulma-link-text) !important;
+          
+        }
+
+        .facet-box{
+          max-height: 25em;
+          overflow-y: scroll;
+          border: solid 1px var(--bulma-text);
+          border-bottom-right-radius: 0;
+          border-top-right-radius: 0;
+
+        }
+
+
+        ::-webkit-scrollbar {
+            width: 1em;
+            height: 1em
+        }
+        ::-webkit-scrollbar-button {
+            background: #ccc;
+
+        }
+        ::-webkit-scrollbar-track-piece {
+            background: #bab9b9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #eee
+        }
+        .tag{
+          text-transform: capitalize;
+          margin: 2px;
+        }
+
+        .item{
+          display: flex;
+        }
+
+        .item>div{
+          flex:1;
+        }
+        .item-meta{
+          padding: 1em;
+          padding-top: 2em;
+        }
+        .item-container{
+          margin-bottom: 4em;
+        }
+        .item-subject-li a{
+          font-size: 0.75em;
+          color: inherit !important;
+        }
+        .item-excerpt{
+          padding: 1em;
+        }
+        .item-subject-ul{
+          list-style: square;
+          padding-left: 2em;
+        }
+        .item-translation-ul{
+          padding: 0.5em 1em 1em 1em;
+        }
+        .meta-header{
+          margin-top: 1em;
+        }
+
+
+        .icon-text svg{
+          margin: 0;
+          padding: 0;
+          height: 30px;
+          width:  auto;
+        }
+
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      svg{
+        fill:var(--bulma-text);
+      }
+
+
+
+        ::-webkit-scrollbar-button {
+            background: #ccc
+        }
+        ::-webkit-scrollbar-track-piece {
+            background: var(--bulma-border);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #eee
+        }
+
+
+
+
+    }
+  }
+
+
+
+
+
+
+

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pub. Domain 2025 Literature Browser</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script>
+
+
+      !async function () {
+
+          window.pagefind = await import("/pagefind/pagefind.js");
+          // const search = await pagefind.search("static");
+          // const oneResult = await search.results[0].data();
+
+          // let blankSearch = await window.pagefind.search(null);
+          // const chunkSize = 10;
+          // for (let i = 0; i < blankSearch.results.length; i += chunkSize) {
+          //     const chunk = blankSearch.results.slice(i, i + chunkSize);
+          //     await Promise.all(chunk.map(r => r.data()));
+          // }
+
+      }();
+
+
+
+    </script>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

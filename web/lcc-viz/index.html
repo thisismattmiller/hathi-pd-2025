@@ -1,0 +1,222 @@
+<html>
+<head>
+</head>
+<body>
+	
+
+<style>
+
+  body{
+    font-family: sans-serif;
+    padding-bottom: 5em;
+  }
+
+.chart{
+	width: 100%; margin: auto;
+
+}
+th{
+  text-align: left;
+}
+
+@media (min-width:1025px)  { 
+
+	.chart{
+		width: 75%;
+	}
+}
+
+tr:nth-child(even){
+   background-color:whitesmoke;
+}
+
+tr:hover{
+   background-color:lightblue;
+}
+
+a{
+  color: black !important;
+}
+.currentPage{
+
+    margin-right: 1em;
+}
+#pages{
+  margin-bottom: 1.5em;
+        font-size: 1.25em;
+}
+
+#pages a{
+  padding-right: 0.5em;
+}
+</style>
+
+<div class="chart">
+  <h1>HathiTrust 1929 Public Domain</h1>
+  <p>This icicle chart shows almost 50,000 1929 published works found in HathiTrust that they indicate will enter the public domain in January 2025. It's organized by their Library of Congress Classification. Click to view the nested topics in the hierarchy that flow left to right. When you select a topic it will load a list of those specific titles in a table below the visualization.
+  </p>
+
+  <p>
+  More info and other interfaces: <a href="https://thisismattmiller.com/post/hathi-pd-2025">Blog Post</a></p>
+</div>
+
+
+<div id="chart" class="chart" style=""></div>
+
+<div class="chart">
+  <h2 id="subjects"></h2>
+  <div id="pages">
+    
+    Click a catagory above to load those titles here.
+
+  </div>
+  
+
+  <table>
+      <thead>
+          <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th></th>
+          </tr>
+      </thead>
+      <tbody id="list">
+
+      </tbody>
+  </table>
+
+</div>
+
+
+
+<div id="observablehq-chart-f3c91051"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@5/dist/inspector.css">
+<script type="module">
+import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
+import define from "https://api.observablehq.com/d/758bede059638694.js?v=4";
+new Runtime().module(define, name => {
+  if (name === "chart") return new Inspector(document.querySelector("#chart"));
+});
+</script>
+
+
+
+
+<script>
+  
+
+function isElementVisible(el) {
+    var rect     = el.getBoundingClientRect(),
+        vWidth   = window.innerWidth || document.documentElement.clientWidth,
+        vHeight  = window.innerHeight || document.documentElement.clientHeight,
+        efp      = function (x, y) { return document.elementFromPoint(x, y) };     
+
+    // Return false if it's not in the viewport
+    if (rect.right < 0 || rect.bottom < 0 
+            || rect.left > vWidth || rect.top > vHeight)
+        return false;
+
+    // Return true if any of its four corners are visible
+    return (
+          el.contains(efp(rect.left,  rect.top))
+      ||  el.contains(efp(rect.right, rect.top))
+      ||  el.contains(efp(rect.right, rect.bottom))
+      ||  el.contains(efp(rect.left,  rect.bottom))
+    );
+}
+
+
+
+let metadata = null
+
+
+fetch('hash_metadata.json')
+  .then(response => response.json())
+  .then(data => metadata = data);
+
+
+window.loadPageData = function(data,page){
+
+
+  if (!page){
+    page=1
+  }
+
+  // load the metadata page
+  
+  fetch(`hashdata/${data.hash}_${page}.json`)
+    .then(response => response.json())
+    .then((volumes) =>{
+
+      console.log(volumes)
+
+
+      
+      document.getElementById('pages').innerHTML = ""
+
+      console.log(metadata[data.hash])
+      if (metadata[data.hash].pages>1){
+
+        document.getElementById('pages').innerHTML = "<span class=\"currentPage\">Page #" + page + "</span>Pages: ";
+
+
+        [...Array(metadata[data.hash].pages)].forEach((_, i) => {
+          
+          let p = document.createElement('a')
+
+          p.dataset.page = i
+          p.dataset.hash = data.hash
+
+          p.setAttribute('href','#')
+          p.classList.add('pageLink')
+          p.innerHTML=i+1
+
+          p.addEventListener('click',(event)=>{
+
+
+            window.loadPageData({hash:event.target.dataset.hash},parseInt(event.target.dataset.page)+1)
+            event.preventDefault()
+            return false
+          })
+
+          document.getElementById('pages').appendChild(p)
+
+          
+        });
+
+
+
+      }
+
+
+
+
+      document.getElementById('subjects').innerHTML = metadata[data.hash].subject.join(" -> ")
+      document.getElementById('list').innerHTML = ""
+      volumes.forEach((d)=>{
+
+        let tr = document.createElement('tr')
+
+        tr.innerHTML = `<td>${d.title}</td><td>${d.author}</td><td><a target="_blank" href="https://babel.hathitrust.org/cgi/pt?id=${d.id}">View</a></td>`
+        document.getElementById('list').appendChild(tr)
+      })
+
+
+
+
+    });
+
+
+}
+
+
+
+
+
+
+</script>
+
+</body>
+
+
+</html>
